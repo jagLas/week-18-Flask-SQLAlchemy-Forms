@@ -2,13 +2,23 @@
 <html>
 
 <head>
-    <title>Sample App - Home</title>
+    <title>{{sitename}}</title>
 </head>
 
 <body>
-    <h1>Sample App</h1>
+    <h1>{{sitename}}</h1>
     <h2>Home Page</h2>
+    {% if not logged_in %}
+    <a href="/login">Log in</a>
+    {% endif %}
     <p>Coming soon to a browser near you...</p>
+    <ul>
+        {% for item in navigation %}
+          <li>
+            <a href="{{ item.href }}">{{ item.caption }}</a>
+          </li>
+        {% endfor %}
+      </ul>
 </body>
 
 </html>

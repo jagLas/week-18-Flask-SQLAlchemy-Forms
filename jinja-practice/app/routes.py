@@ -1,11 +1,15 @@
 from app import app
 from flask import render_template
+nav = [
+  { 'href': 'https://appacademy.io', 'caption': 'App Academy' },
+  { 'href': 'https://archive.or', 'caption': 'Internet Archive' },
+]
 
 
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', sitename='My Sample', logged_in=False, navigation = nav)
 
 @app.route('/about')
 def about():
