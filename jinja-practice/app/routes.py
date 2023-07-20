@@ -9,11 +9,11 @@ nav = [
 @app.route('/')
 @app.route('/home')
 def index():
-    return render_template('index.html', sitename='My Sample', logged_in=False, navigation = nav)
+    return render_template('index.html', sitename='My Sample', page='Home', logged_in=False, navigation = nav)
 
 @app.route('/about')
 def about():
-    return '<h1>About</h1>'
+    return render_template('index.html', sitename='My Sample', page='About')
 
 @app.route('/item/<int:id>')
 def item(id):
