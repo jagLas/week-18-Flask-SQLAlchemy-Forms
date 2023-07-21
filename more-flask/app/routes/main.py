@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, session
 bp = Blueprint('main', __name__,)
 
 @bp.route('/')
@@ -22,3 +22,17 @@ def before_request_function():
 def after_request_function(response):
     print("after_request is running")
     return response
+
+@bp.route('/visits-counter/')
+def visits():
+    if 'visits' in session:
+        session['visits'] = session.get('visits') + 1
+    else:
+        session['visits'] = 1
+
+    return 'Total Visits: {}'.format(session.get('visits'))
+
+@bp.route('/delete-visits/')
+def delete_visits():
+    session.pop('visits', None)
+    return 'Visits deleted'
