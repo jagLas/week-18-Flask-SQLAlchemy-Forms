@@ -2,7 +2,7 @@ from flask import Blueprint, render_template, redirect, url_for
 import psycopg2
 import os
 from app import forms
-from datetime import datetime
+from datetime import datetime, timedelta
 
 bp = Blueprint('main', __name__, '/')
 
@@ -41,11 +41,14 @@ def daily(year, month, day):
                 params)
                 return redirect('/')
     else:
+        date = datetime(year=year, month=month, day=day)
+        next_day = date + timedelta(days=1)
         conn = psycopg2.connect(**CONNECTION_PARAMETERS)
         cursor = conn.cursor()
         cursor.execute('''SELECT id, name, start_datetime, end_datetime
                         FROM appointments
-                        ORDER BY start_datetime''')
+                        WHERE start_datetime BETWEEN %s AND %s
+                        ORDER BY start_datetime''', (date, next_day))
         records = cursor.fetchall()
         
         return render_template('main.html', rows=records, form=form)
