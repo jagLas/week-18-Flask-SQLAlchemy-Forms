@@ -5,5 +5,23 @@
     </head>
     <body>
         <h1>Calendar Working</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in rows %}
+                    <tr>
+                        <td>{{record[1]}}</td>
+                        <td>{{record[2].strftime('%H:%M')}}</td>
+                        <td>{{record[3].strftime('%H:%M')}}</td>
+                    </tr> 
+                {% endfor %}
+            </tbody>
+        </table>
     </body>
 </html>

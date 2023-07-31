@@ -16,8 +16,9 @@ def main():
     conn = psycopg2.connect(**CONNECTION_PARAMETERS)
     cursor = conn.cursor()
     print(cursor)
-    cursor.execute('SELECT * FROM appointments')
+    cursor.execute('''SELECT id, name, start_datetime, end_datetime
+                    FROM appointments
+                    ORDER BY start_datetime''')
     records = cursor.fetchall()
-    return records
     
-    # return render_template('main.html', rows=records)
+    return render_template('main.html', rows=records)
