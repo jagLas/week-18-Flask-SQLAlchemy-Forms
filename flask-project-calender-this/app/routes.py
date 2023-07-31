@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template
 import psycopg2
 import os
+from app import forms
 
 bp = Blueprint('main', __name__, '/')
 
@@ -13,6 +14,7 @@ CONNECTION_PARAMETERS = {
 
 @bp.route('/')
 def main():
+    form = forms.AppointmentForm()
     conn = psycopg2.connect(**CONNECTION_PARAMETERS)
     cursor = conn.cursor()
     print(cursor)
@@ -21,4 +23,4 @@ def main():
                     ORDER BY start_datetime''')
     records = cursor.fetchall()
     
-    return render_template('main.html', rows=records)
+    return render_template('main.html', rows=records, form=form)

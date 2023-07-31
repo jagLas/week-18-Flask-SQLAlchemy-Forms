@@ -4,7 +4,40 @@
         <title></title>
     </head>
     <body>
-        <h1>Calendar Working</h1>
+        <form method="post" action="/">
+            {{form.hidden_tag()}}
+            <p>
+                {{form.name.label}}
+                {{form.name}}
+            </p>
+            <p>
+                {{form.start_datetime_date.label}}
+                {{form.start_datetime_date}}
+            </p>
+            <p>
+                {{form.start_datetime_time.label}}
+                {{form.start_datetime_time}}
+            </p>
+            <p>
+                {{form.end_datetime_date.label}}
+                {{form.end_datetime_date}}
+            </p>
+            <p>
+                {{form.end_datetime_time.label}}
+                {{form.end_datetime_time}}
+            </p>
+            <p>
+                {{form.description.label}}
+                {{form.description}}
+            </p>
+            <p>
+                {{form.private.label}}
+                {{form.private}}
+            </p>
+            <p>
+                {{form.submit}}
+            </p>
+        </form>
         <table>
             <thead>
                 <tr>
@@ -23,5 +56,6 @@
                 {% endfor %}
             </tbody>
         </table>
+
     </body>
 </html>
