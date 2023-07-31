@@ -20,3 +20,7 @@ class AppointmentForm(FlaskForm):
         if start_date >= end_date:
             msg = 'End date/time must come after start date/time'
             raise ValidationError(msg)
+        
+        if field.data != form.start_datetime_date.data:
+            msg = 'End Date must be the same day as start date'
+            raise ValidationError(msg)
