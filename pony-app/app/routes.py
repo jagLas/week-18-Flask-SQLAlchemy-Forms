@@ -8,3 +8,9 @@ from flask import render_template
 def index():
     pony_count = Pony.query.count()
     return render_template('index.html', pony_count=pony_count)
+
+
+@app.route('/ponies')
+def ponies():
+    ponies = Pony.query.all()
+    return render_template('ponies.html', ponies=ponies)

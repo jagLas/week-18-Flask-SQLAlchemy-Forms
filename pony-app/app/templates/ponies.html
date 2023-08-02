@@ -1,0 +1,22 @@
+<html>
+  <head>
+    <title>I Want A Pony</title>
+  </head>
+  <body>
+    <a href="{{url_for('index')}}">Home</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Birth Year</th>
+            <th>Breed</th>
+        </tr>
+        {% for pony in ponies %}
+        <tr>
+            <td>{{pony.name}}</td>
+            <td>{{pony.birth_year}}</td>
+            <td>{{pony.breed}}</td>
+        </tr>
+    {% endfor %}
+    </table>
+  </body>
+</html>
