@@ -31,7 +31,7 @@ class Owner(Base):
     email = Column(String(255))
 
     # sets up rlelationship many-one-relationship
-    ponies = relationship("Pony", back_populates="owner")
+    ponies = relationship("Pony", back_populates="owner", cascade="all, delete-orphan")
 
 
 class Pony(Base):
