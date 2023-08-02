@@ -25,3 +25,11 @@ def add_pony():
         return redirect(url_for('ponies'))
     owners = Owner.query.order_by(Owner.last_name, Owner.first_name).all()
     return render_template('pony_form.html', owners=owners)
+
+
+@app.route('/ponies/<int:id>/delete', methods=['POST'])
+def delete_pony(id):
+    pony = Pony.query.get(id)
+    db.session.delete(pony)
+    db.session.commit()
+    return redirect(url_for('ponies'))
