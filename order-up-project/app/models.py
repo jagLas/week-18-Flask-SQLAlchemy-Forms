@@ -21,6 +21,7 @@ class Employee(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+    # add relationsihp
 
 
 class Menu(db.Model):
@@ -57,3 +58,19 @@ class Table(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     number = db.Column(db.Integer, nullable=False, unique=True)
     capacity = db.Column(db.Integer, nullable=False)
+    # add relationships
+
+
+class Order(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    employee_id = db.Column(db.Integer, db.ForeignKey('employee.id'))
+    table_id = db.Column(db.Integer, db.ForeignKey('tables.id'))
+    finished = db.Column(db.Boolean, nullable=False)
+    # add relationships
+
+
+class OrderDetail(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
+    menu_item_id = db.Column(db.Integer, db.ForeignKey('menu_items.id'))
+    # add relationships
