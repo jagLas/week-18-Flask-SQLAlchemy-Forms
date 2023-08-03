@@ -6,7 +6,7 @@ load_dotenv()
 # so that the environment variables are
 # properly loaded.
 from app import app, db
-from app.models import Employee, Menu, MenuItem, MenuItemType
+from app.models import Employee, Menu, MenuItem, MenuItemType, Table, Order, OrderDetail
 
 
 with app.app_context():
@@ -28,4 +28,15 @@ with app.app_context():
     jambalaya = MenuItem(name="Jambalaya", price=21.98, type=entrees, menu=dinner)
     # db.session.add(beverages)
     db.session.add_all([beverages, entrees, sides, dinner, fries, drp, jambalaya])
+    db.session.commit()
+
+    table1 = Table(number=13, capacity=4)
+    table2 = Table(number=7, capacity=6)
+
+    order = Order(employee=employee, table=table2, finished=False)
+    detail1 = OrderDetail(order=order, item=fries)
+    detail2 = OrderDetail(order=order, item=jambalaya)
+    detail3 = OrderDetail(order=order, item=fries)
+
+    db.session.add_all([table1, table2, order, detail1, detail2, detail3])
     db.session.commit()
