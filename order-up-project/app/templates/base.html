@@ -7,6 +7,12 @@
     {% endif %}
   </head>
   <body>
+    {% if not current_user.is_anonymous %}
+    <form method="POST" action="{{ url_for('session.logout') }}">
+        <input type="submit" value="Logout">
+    </form>
+    {% endif %}
+    </form>
     {% block content %}{% endblock %}
   </body>
 </html>
