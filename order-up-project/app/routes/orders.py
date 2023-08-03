@@ -9,7 +9,7 @@ bp = Blueprint('orders', __name__, url_prefix='')
 @bp.route('/')
 @login_required
 def index():
-    orders = Order.query.options(joinedload(Order.table)).all()
+    orders = Order.query.options(joinedload(Order.table)).order_by(Order.finished).order_by(Order.id.desc()).all()
     return render_template('orders.html', orders=orders)
 
 
