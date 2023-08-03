@@ -3,16 +3,44 @@
 {% block content %}
 <h1>Order up!</h1>
 <ul>
-    {% for order in orders %}
-    <li>
-        <span>Order #{{order.id}}</span>
-        <span>Table {{order.table.number}}</span>
-        <span>Finished {{order.finished}}</span>
-        <form method="POST" action="{{ url_for('orders.close_table', id=order.table.id)}}">
-            {{ form.csrf_token }}
-            <input type="submit" value="Close Table">
-        </form>
-    </li>
-    {% endfor %}
+
+    <table>
+        <tr>
+            <th>Table</th>
+            <th>Order</th>
+            <th>Total</th>
+            <th>Finished</th>
+            <th>Close Order</th>
+            <th>Add to Order</th>
+            
+        </tr>
+        {% for order in orders %}
+        <tr>
+            <td>#{{order.table.number}}</td>
+            <td>#{{order.id}}</td>
+            <td></td>
+            <td>Finished {{order.finished}}</td>
+            <td>
+                {% if not order.finished %}
+
+                <form method="POST" action="{{ url_for('orders.close_table', id=order.id)}}">
+                    <input type="submit" value="Close Order">
+                </form>
+
+                {% else %}
+
+                <form method="POST" action="{{ url_for('orders.open_table', id=order.id)}}">
+                    <input type="submit" value="Open Order">
+                </form>
+
+                {% endif %}
+            </td>
+            <td>
+                
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
 </ul>
 {% endblock %}
