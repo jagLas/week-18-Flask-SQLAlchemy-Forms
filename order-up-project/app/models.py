@@ -22,6 +22,7 @@ class Employee(db.Model, UserMixin):
     def check_password(self, password):
         return check_password_hash(self.password, password)
     # add relationsihp
+    orders = db.relationship('Order', back_populates='employee')
 
 
 class Menu(db.Model):
@@ -42,6 +43,7 @@ class MenuItem(db.Model):
 
     menu = db.relationship('Menu', back_populates='menu_items')
     type = db.relationship('MenuItemType', back_populates='items')
+    orders = db.relationship('OrderDetail', back_populates='item')
 
 
 class MenuItemType(db.Model):
@@ -59,6 +61,7 @@ class Table(db.Model):
     number = db.Column(db.Integer, nullable=False, unique=True)
     capacity = db.Column(db.Integer, nullable=False)
     # add relationships
+    orders = db.relationship('Order', back_populates='table')
 
 
 class Order(db.Model):
@@ -67,6 +70,9 @@ class Order(db.Model):
     table_id = db.Column(db.Integer, db.ForeignKey('tables.id'))
     finished = db.Column(db.Boolean, nullable=False)
     # add relationships
+    employee = db.relationship('Employee', back_populates='orders')
+    table = db.relationship('Table', back_populates='orders')
+    details = db.relationship('OrderDetail', back_populates='order')
 
 
 class OrderDetail(db.Model):
@@ -74,3 +80,5 @@ class OrderDetail(db.Model):
     order_id = db.Column(db.Integer, db.ForeignKey('order.id'))
     menu_item_id = db.Column(db.Integer, db.ForeignKey('menu_items.id'))
     # add relationships
+    order = db.relationship('Order', back_populates='details')
+    item = db.relationship('MenuItem', back_populates='orders')
