@@ -38,5 +38,8 @@ with app.app_context():
     detail2 = OrderDetail(order=order, item=jambalaya)
     detail3 = OrderDetail(order=order, item=fries)
 
-    db.session.add_all([table1, table2, order, detail1, detail2, detail3])
+    order2 = Order(employee=employee, table=table1, finished=False)
+    detail4 = OrderDetail(order=order2, item=drp)
+
+    db.session.add_all([table1, table2, order, detail1, detail2, detail3, order2, detail4])
     db.session.commit()
