@@ -9,17 +9,17 @@
             <th>Table</th>
             <th>Order</th>
             <th>Total</th>
-            <th>Finished</th>
+            <th>Open</th>
             <th>Close Order</th>
             <th>Add to Order</th>
             
         </tr>
         {% for order in orders %}
-        <tr>
+        <tr class="order-row">
             <td>#{{order.number}}</td>
             <td>#{{order.order_id}}</td>
             <td>{{order.total|round(2)}}</td>
-            <td>{{order.finished}}</td>
+            <td>{{not order.finished}}</td>
             <td>
                 {% if not order.finished %}
 

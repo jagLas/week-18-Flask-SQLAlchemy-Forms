@@ -1,0 +1,12 @@
+.order-row {
+    text-align: center;
+}
+
+table {
+    width: 500px;
+    border: solid 1px black;
+}
+
+.order-row > td{
+    vertical-align: top;
+}

@@ -4,7 +4,9 @@ from .routes import orders, session
 from .models import db, Employee
 from flask_login import LoginManager
 
-app = Flask(__name__)
+app = Flask(__name__,
+            static_url_path='',
+            static_folder='static')
 app.config.from_object(Configuration)
 app.register_blueprint(orders.bp)
 app.register_blueprint(session.bp)
