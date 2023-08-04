@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for
+from flask import Blueprint, render_template, redirect, url_for, request
 from sqlalchemy.orm import joinedload
 from flask_login import login_required
 from ..models import db, Order, OrderDetail, Table, MenuItem, MenuItemType
@@ -23,9 +23,6 @@ def index():
         .order_by(MenuItemType.name, MenuItem.name)\
         .all()
 
-    for item in menu_items:
-        print(item)
-
     form = MenuItemAssignmentForm()
     form.menu_item_ids.choices = [(item.id, item.name) for item in menu_items]
 
@@ -49,4 +46,23 @@ def open_table(id):
     order.finished = False
     db.session.commit()
 
+    return redirect(url_for('orders.index'))
+
+
+@bp.route('/orders/<int:id>/items', methods=['POST'])
+@login_required
+def add_items(id):
+    menu_items = MenuItem.query.join(MenuItemType)\
+        .order_by(MenuItemType.name, MenuItem.name)\
+        .all()
+    form = MenuItemAssignmentForm()
+    form.menu_item_ids.choices = [(item.id, item.name) for item in menu_items]
+    print(form.menu_item_ids.data)
+    order = db.get_or_404(Order, id)
+    if form.validate_on_submit():
+        new_items = []
+        for item in form.menu_item_ids.data:
+            new_items.append(OrderDetail(order_id=id, menu_item_id=item))
+        db.session.add_all(new_items)
+        db.session.commit()
     return redirect(url_for('orders.index'))
