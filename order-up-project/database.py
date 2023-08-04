@@ -14,7 +14,9 @@ with app.app_context():
     db.create_all()
 
     employee = Employee(name="Margot", employee_number=1234, password="password")
+    employee2 = Employee(name="Robbie", employee_number=1111, password="password")
     db.session.add(employee)
+    db.session.add(employee2)
     db.session.commit()
 
     beverages = MenuItemType(name="Beverages")
