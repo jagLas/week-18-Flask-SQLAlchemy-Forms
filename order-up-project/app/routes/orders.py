@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for
 from sqlalchemy.orm import joinedload
 from flask_login import login_required
-from ..models import db, Order, OrderDetail, Table
+from ..models import db, Order, OrderDetail, Table, MenuItem
+from sqlalchemy.sql import functions as func
 
 bp = Blueprint('orders', __name__, url_prefix='')
 
@@ -9,7 +10,13 @@ bp = Blueprint('orders', __name__, url_prefix='')
 @bp.route('/')
 @login_required
 def index():
-    orders = Order.query.options(joinedload(Order.table)).order_by(Order.finished).order_by(Order.id.desc()).all()
+    orders = db.session.query((OrderDetail.order_id),
+                              Table.number,
+                              Order.finished,
+                              func.sum(MenuItem.price).label('total'))\
+        .select_from(OrderDetail).join(Order).join(Table).join(MenuItem)\
+        .group_by(OrderDetail.order_id, Table.number, Order.finished)\
+        .order_by(Order.finished).order_by(Table.number).all()
     return render_template('orders.html', orders=orders)
 
 
