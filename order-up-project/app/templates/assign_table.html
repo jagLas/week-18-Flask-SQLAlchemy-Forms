@@ -1,0 +1,8 @@
+<h2>Assign to table</h2>
+<form method="POST" action="{{ url_for('orders.new_order')}}">
+    {{table_assign_form.csrf_token}}
+
+    {{table_assign_form.servers}}
+    {{table_assign_form.tables}}
+    {{table_assign_form.assign}}
+</form>

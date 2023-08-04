@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, \
-    SelectMultipleField, widgets
+    SelectMultipleField, SelectField, widgets
 from wtforms.validators import DataRequired
 
 
@@ -18,3 +18,9 @@ class MultiCheckboxField(SelectMultipleField):
 
 class MenuItemAssignmentForm(FlaskForm):
     menu_item_ids = MultiCheckboxField("Menu items", coerce=int)
+
+
+class TableAssignmentForm(FlaskForm):
+    tables = SelectField('Tables', coerce=int)
+    servers = SelectField('Servers', coerce=int)
+    assign = SubmitField('Assign')
