@@ -18,7 +18,7 @@
         <tr>
             <td>#{{order.number}}</td>
             <td>#{{order.order_id}}</td>
-            <td>{{order.total}}</td>
+            <td>{{order.total|round(2)}}</td>
             <td>{{order.finished}}</td>
             <td>
                 {% if not order.finished %}

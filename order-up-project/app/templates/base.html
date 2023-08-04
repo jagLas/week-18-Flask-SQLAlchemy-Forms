@@ -14,6 +14,9 @@
     {% endif %}
     </form>
     {% block content %}{% endblock %}
+    
+    {% if not current_user.is_anonymous %}
     {% include 'items.html' %}
+    {% endif %}
   </body>
 </html>
