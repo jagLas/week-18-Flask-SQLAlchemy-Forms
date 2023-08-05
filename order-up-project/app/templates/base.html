@@ -17,7 +17,7 @@
     {% block content %}{% endblock %}
 
     {% if not current_user.is_anonymous %}
-    {% include 'assign_table.html' %}
+
     {% include 'items.html' %}
     {% endif %}
   </body>

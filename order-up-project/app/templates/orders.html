@@ -1,6 +1,9 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
+{% include 'assign_table.html' %}
+
 <h1>Order up!</h1>
 <ul>
 
@@ -17,26 +20,26 @@
         {% for order in orders %}
         <tr class="order-row">
             <td>#{{order.number}}</td>
-            <td>#{{order.order_id}}</td>
+            <td>#{{order.id}}</td>
             <td>{{order.total|round(2)}}</td>
             <td>{{not order.finished}}</td>
             <td>
                 {% if not order.finished %}
 
-                <form method="POST" action="{{ url_for('orders.close_table', id=order.order_id)}}">
+                <form method="POST" action="{{ url_for('orders.close_table', id=order.id)}}">
                     <input type="submit" value="Close Order">
                 </form>
 
                 {% else %}
 
-                <form method="POST" action="{{ url_for('orders.open_table', id=order.order_id)}}">
+                <form method="POST" action="{{ url_for('orders.open_table', id=order.id)}}">
                     <input type="submit" value="Open Order">
                 </form>
 
                 {% endif %}
             </td>
             <td>
-                <button form="food-list" formaction="/orders/{{order.order_id}}/items">
+                <button form="food-list" formaction="/orders/{{order.id}}/items">
                     Add to order
                 </button>
             </td>

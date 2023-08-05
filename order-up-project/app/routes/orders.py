@@ -1,5 +1,4 @@
-from flask import Blueprint, render_template, redirect, url_for, request
-from sqlalchemy.orm import joinedload
+from flask import Blueprint, render_template, redirect, url_for
 from flask_login import login_required
 from ..models import db, Order, OrderDetail, Table, MenuItem, MenuItemType, \
     Employee
@@ -13,13 +12,18 @@ bp = Blueprint('orders', __name__, url_prefix='')
 @login_required
 def index():
     # need to fix query so that orders show up when there are no details
-    orders = db.session.query((OrderDetail.order_id),
+    orders = db.session.query((Order.id),
                               Table.number,
                               Order.finished,
-                              func.sum(MenuItem.price).label('total'))\
-        .select_from(OrderDetail).join(Order).join(Table).join(MenuItem)\
-        .group_by(OrderDetail.order_id, Table.number, Order.finished)\
-        .order_by(Order.finished).order_by(Table.number).all()
+                              func.coalesce(func.sum(MenuItem.price),
+                                            0).label('total'))\
+        .select_from(Order).join(OrderDetail, full=True)\
+        .join(Table, full=True).join(MenuItem, full=True)\
+        .group_by(Order.id, Table.number, Order.finished)\
+        .order_by(Order.finished).order_by(Table.number)
+
+    print(orders)
+    orders = orders.all()
 
     menu_items = MenuItem.query.join(MenuItemType)\
         .order_by(MenuItemType.name, MenuItem.name)\
