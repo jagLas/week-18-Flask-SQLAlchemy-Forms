@@ -4,6 +4,7 @@ from ..models import db, Order, OrderDetail, Table, MenuItem, MenuItemType, \
     Employee
 from sqlalchemy.sql import functions as func
 from ..forms import MenuItemAssignmentForm, TableAssignmentForm
+from flask_login import current_user
 
 bp = Blueprint('orders', __name__, url_prefix='')
 
@@ -12,7 +13,8 @@ bp = Blueprint('orders', __name__, url_prefix='')
 @login_required
 def index():
     # need to fix query so that orders show up when there are no details
-    orders = db.session.query((Order.id),
+    print(current_user.id)
+    orders = db.session.query((Order.id).label('id'),
                               Table.number,
                               Order.finished,
                               func.coalesce(func.sum(MenuItem.price),
@@ -20,9 +22,9 @@ def index():
         .select_from(Order).join(OrderDetail, full=True)\
         .join(Table, full=True).join(MenuItem, full=True)\
         .group_by(Order.id, Table.number, Order.finished)\
-        .order_by(Order.finished).order_by(Table.number)
+        .order_by(Order.finished).order_by(Table.number)\
+        .filter_by(id=current_user.id)
 
-    print(orders)
     orders = orders.all()
 
     menu_items = MenuItem.query.join(MenuItemType)\
