@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Tracker - New Package</title>
+</head>
+<body>
+    <h1>Add a package</h1>
+    <div>
+        <form method="POST" action="">
+            {{form.sender.label}} {{form.sender}}
+            {{form.recipient.label}} {{form.recipient}}
+            {{form.origin.label}} {{form.origin}}
+            {{form.destination.label}} {{form.destination}}
+            {{form.express.label}} {{form.express}}
+            {{form.submit}}
+        </form>
+        <a href='/'><button action="/" method="GET">Cancel</button></a>
+    </div>
+
+</body>
+</html>
