@@ -5,8 +5,6 @@ from map.map import map
 
 cities_list = tuple(map)
 
-print(cities_list)
-
 class ShippingForm(FlaskForm):
     sender = StringField('Sender Name', validators=[DataRequired()])
     recipient = StringField('Recipient Name', validators=[DataRequired()])

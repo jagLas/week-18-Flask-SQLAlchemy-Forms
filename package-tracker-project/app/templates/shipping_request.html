@@ -9,6 +9,7 @@
     <h1>Add a package</h1>
     <div>
         <form method="POST" action="">
+            {{form.csrf_token}}
             {{form.sender.label}} {{form.sender}}
             {{form.recipient.label}} {{form.recipient}}
             {{form.origin.label}} {{form.origin}}

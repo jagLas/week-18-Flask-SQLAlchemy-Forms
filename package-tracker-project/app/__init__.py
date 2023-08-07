@@ -14,5 +14,6 @@ def root():
 @app.route('/new_package', methods=['POST', 'GET'])
 def new_package():
     form = ShippingForm()
-
+    if form.validate_on_submit():
+        return 'Success'
     return render_template('shipping_request.html', form=form)
