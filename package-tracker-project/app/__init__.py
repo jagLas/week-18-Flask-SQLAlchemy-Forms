@@ -20,10 +20,11 @@ def root():
 def new_package():
     form = ShippingForm()
     if form.validate_on_submit():
+        Package.advance_all_locations()
         data = form.data.copy()
         data.pop('submit')
         data.pop('csrf_token')
-        new_package = Package(**data)
+        new_package = Package(location=data['origin'], **data)
         db.session.add(new_package)
         db.session.commit()
         return redirect('/')
