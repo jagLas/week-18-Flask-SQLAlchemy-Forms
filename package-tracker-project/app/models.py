@@ -11,3 +11,4 @@ class Package(db.Model):
     origin = db.Column(db.String(255))
     destination = db.Column(db.String(255))
     location = db.Column(db.String(255))
+    express = db.Column(db.Boolean())
