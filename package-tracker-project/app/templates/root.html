@@ -8,6 +8,39 @@
 <body>
     <h1>Package Tracker</h1>
     <a href="/new_package">Track a new package</a>
+    <table>
+
+        <tr>
+            <th>Package id</th>
+            <th>Sender</th>
+            <th>Recipient</th>
+            <th>Origin</th>
+            <th>Destination</th>
+            <th>Location</th>
+            <th>Express Requested</th>
+
+        </tr>
+        {% for package in packages %}
+
+        <tr>
+            <td>#{{package.id}}</td>
+            <td>{{package.sender}}</td>
+            <td>{{package.recipient}}</td>
+            <td>{{package.origin}}</td>
+            <td>{{package.destination}}</td>
+            <td>{{package.location}}</td>
+            <td>
+                {% if package.express %}
+                    <p>yes</p>
+                {% else %}
+                    <p>no</p>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% endfor %}
+    </table>
+
 
 </body>
 </html>
